@@ -11,7 +11,7 @@
   3. home
   4. dettagli azienda
   
-  ### 3. home
+  #### III. home
   pagina strutturata con tutte le aziende (bottoni)
   se si schiaccia sulle aziende si rimanda alla pagina dettagli_azienda
   in cui sono riportati: nome dell'azienda, indirizzo,
