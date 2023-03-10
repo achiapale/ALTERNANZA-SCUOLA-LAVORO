@@ -6,10 +6,10 @@
 - creazione del db e delle tabelle
 - svolgimento delle query
 - creazione pagine php:
-  I. login
-  II. registrati
-  III. home
-  IV. dettagli azienda
+  1. login
+  2. registrati
+  3. home
+  4. dettagli azienda
   
   #### III. home
   pagina strutturata con tutte le aziende (bottoni)
