@@ -1,0 +1,81 @@
+CREATE TABLE CLASSE(
+    IdClasse INT NOT NULL,
+    classe INT NOT NULL,
+    sezione CHAR(1) NOT NULL,
+    specializzazione CHAR(20) NOT NULL,
+    PRIMARY KEY(IdClasse),
+    CHECK(classe IN (classe >= 1 OR classe <= 5))
+);
+
+CREATE TABLE AZIENDA(
+    IdAzienda INT NOT NULL,
+    Nome CHAR(20) NOT NULL,
+    PartitaIva INT NOT NULL,
+    Via CHAR(20) NOT NULL,
+    Città CHAR(20) NOT NULL,
+    CAP INT NOT NULL,
+    Telefono INT NOT NULL,
+    Email CHAR(30) NOT NULL,
+    PRIMARY KEY(IdAzienda)
+);
+
+CREATE TABLE TUTOR (
+    idTutor INT NOT NULL,
+    nome CHAR(20) NOT NULL,
+    cognome CHAR(20) NOT NULL,
+    idAzienda INT NOT NULL,
+    PRIMARY KEY(idTutor),
+    FOREIGN KEY(idAzienda) REFERENCES AZIENDA(idAzienda)
+);
+
+
+CREATE TABLE ATTIVITA_FORMATIVA (
+    idAttivita INT NOT NULL,
+    modalita CHAR(30) NOT NULL,
+    descrizione CHAR(50) NOT NULL,
+    argomento CHAR(30) NOT NULL,
+    valutazione CHAR NOT NULL,
+    idAzienda INT NOT NULL,
+    PRIMARY KEY(idAttivita),
+    FOREIGN KEY(idAzienda) REFERENCES AZIENDA (idAzienda),
+    CHECK (valutazione IN (valutazione >= 2 AND valutazione <=10))
+);
+    
+	
+CREATE TABLE DOCENTE(
+    idDocente INT NOT NULL,
+    nome CHAR(20) NOT NULL,
+    cognome CHAR(20) NOT NULL,
+    PRIMARY KEY(idDocente)
+);
+
+
+
+CREATE TABLE STUDENTE(
+    idStudente INT NOT NULL,
+    nome CHAR(20) NOT NULL,
+    cognome CHAR(20) NOT NULL,
+    dataNascita DATE NOT NULL,
+    email CHAR(30) NOT NULL,
+    psw CHAR(30) NOT NULL,
+    idDocente INT NOT NULL,
+    idTutor INT NOT NULL,
+    idClasse INT NOT NULL,
+    PRIMARY KEY(idStudente),
+    FOREIGN KEY(idDocente) REFERENCES DOCENTE(idDocente),
+	FOREIGN KEY(idTutor) REFERENCES TUTOR(idTutor),
+    FOREIGN KEY(idClasse) REFERENCES CLASSE(idClasse)
+);
+
+    
+    
+	CREATE TABLE STUDENTE_ATTIVITAFORMATIVA (
+    idStudente INT NOT NULL,
+    idAttivitaFormativa INT NOT NULL,
+    dataInizio DATE NOT NULL,
+    durata INT NOT NULL,
+    PRIMARY KEY(idStudente, idAttivitaFormativa, dataInizio),
+    FOREIGN KEY (idStudente) REFERENCES STUDENTE(idStudente),
+    FOREIGN KEY (idAttivitaFormativa) REFERENCES ATTIVITA_FORMATIVA(idAttivita)
+);
+    
