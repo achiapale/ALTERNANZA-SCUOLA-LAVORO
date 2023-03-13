@@ -3,3 +3,7 @@ SPIEGAZIONE DELLA DIAGRAMMA E/R
 Abbiamo creato l'entità docente con i seguenti attributi: idDocente (chiave primaria), Nome e Cognome.
 Questa entità è associata attraverso una relazione N - 1 (perchè i docenti possono selezionare più studentii, mentre unostudente può essere selezionato da un solo doccente) 
 all'entità studente composta da: 
+
+
+
+https://docs.google.com/document/d/1g1_bxeytxZG_xI8x8au9-2crq0rPrqgBmtFGiZBc3DI/edit?usp=sharing
