@@ -35,7 +35,7 @@ CREATE TABLE ATTIVITA_FORMATIVA (
     descrizione CHAR(50) NOT NULL,
     argomento CHAR(30) NOT NULL,
     valutazione CHAR NOT NULL,
-	dataRilascio DATE NOT NULL,
+    dataRilascio DATE NOT NULL,
     idAzienda INT NOT NULL,
     PRIMARY KEY(idAttivita),
     FOREIGN KEY(idAzienda) REFERENCES AZIENDA (idAzienda),
@@ -64,14 +64,14 @@ CREATE TABLE STUDENTE(
     idClasse INT NOT NULL,
     PRIMARY KEY(idStudente),
     FOREIGN KEY(idDocente) REFERENCES DOCENTE(idDocente),
-	FOREIGN KEY(idTutor) REFERENCES TUTOR(idTutor),
+    FOREIGN KEY(idTutor) REFERENCES TUTOR(idTutor),
     FOREIGN KEY(idClasse) REFERENCES CLASSE(idClasse)
 );
 
     
     
-	CREATE TABLE STUDENTE_ATTIVITAFORMATIVA (
-	idStudenteAttivitaFromativa INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE STUDENTE_ATTIVITAFORMATIVA (
+    idStudenteAttivitaFromativa INT NOT NULL AUTO_INCREMENT,
     idStudente INT NOT NULL,
     idAttivitaFormativa INT NOT NULL,
     dataInizio DATE NOT NULL,
@@ -80,4 +80,3 @@ CREATE TABLE STUDENTE(
     FOREIGN KEY (idStudente) REFERENCES STUDENTE(idStudente),
     FOREIGN KEY (idAttivitaFormativa) REFERENCES ATTIVITA_FORMATIVA(idAttivita)
 );
-    
