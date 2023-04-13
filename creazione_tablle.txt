@@ -1,3 +1,7 @@
+DATABASE
+CREATE DATABASE IF NOT EXISTS ALTERNANZA;
+
+CLASSE
 CREATE TABLE CLASSE (
     IdClasse INT NOT NULL AUTO_INCREMENT,
     classe INT NOT NULL,
@@ -7,6 +11,7 @@ CREATE TABLE CLASSE (
     CHECK(classe IN (classe >= 1 OR classe <= 5))
 );
 
+AZIENDA
 CREATE TABLE AZIENDA (
     IdAzienda INT NOT NULL AUTO_INCREMENT,
     Nome CHAR(20) NOT NULL,
@@ -16,9 +21,12 @@ CREATE TABLE AZIENDA (
     CAP INT NOT NULL,
     Telefono INT NOT NULL,
     Email CHAR(30) NOT NULL,
+    Link CHAR(50) NOT NULL,
     PRIMARY KEY(IdAzienda)
 );
 
+
+TUTOR
 CREATE TABLE TUTOR (
     idTutor INT NOT NULL AUTO_INCREMENT,
     nome CHAR(20) NOT NULL,
@@ -28,21 +36,18 @@ CREATE TABLE TUTOR (
     FOREIGN KEY(idAzienda) REFERENCES AZIENDA(idAzienda)
 );
 
-
+ATTIVITA_FORMATIVA
 CREATE TABLE ATTIVITA_FORMATIVA (
     idAttivita INT NOT NULL AUTO_INCREMENT,
-    modalita CHAR(30) NOT NULL,
+    modalità CHAR(30) NOT NULL,
     descrizione CHAR(50) NOT NULL,
     argomento CHAR(30) NOT NULL,
-    valutazione CHAR NOT NULL,
-    dataRilascio DATE NOT NULL,
     idAzienda INT NOT NULL,
     PRIMARY KEY(idAttivita),
-    FOREIGN KEY(idAzienda) REFERENCES AZIENDA (idAzienda),
-    CHECK (valutazione IN (valutazione >= 2 AND valutazione <=10))
-);
+    FOREIGN KEY(idAzienda) REFERENCES AZIENDA (idAzienda)
+    );
     
-	
+DOCENTE
 CREATE TABLE DOCENTE(
     idDocente INT NOT NULL AUTO_INCREMENT,
     nome CHAR(20) NOT NULL,
@@ -50,8 +55,7 @@ CREATE TABLE DOCENTE(
     PRIMARY KEY(idDocente)
 );
 
-
-
+STUDENTE
 CREATE TABLE STUDENTE(
     idStudente INT NOT NULL AUTO_INCREMENT,
     nome CHAR(20) NOT NULL,
@@ -62,21 +66,25 @@ CREATE TABLE STUDENTE(
     idDocente INT NOT NULL,
     idTutor INT NOT NULL,
     idClasse INT NOT NULL,
+    annoScolastico CHAR(20) NOT NULL,
     PRIMARY KEY(idStudente),
     FOREIGN KEY(idDocente) REFERENCES DOCENTE(idDocente),
-    FOREIGN KEY(idTutor) REFERENCES TUTOR(idTutor),
+	FOREIGN KEY(idTutor) REFERENCES TUTOR(idTutor),
     FOREIGN KEY(idClasse) REFERENCES CLASSE(idClasse)
 );
 
-    
-    
+
+ STUDENTE_ATTIVITAFORMATIVA 
 CREATE TABLE STUDENTE_ATTIVITAFORMATIVA (
     idStudenteAttivitaFromativa INT NOT NULL AUTO_INCREMENT,
     idStudente INT NOT NULL,
     idAttivitaFormativa INT NOT NULL,
     dataInizio DATE NOT NULL,
     durata INT NOT NULL,
+    valutazione INT NOT NULL,
     PRIMARY KEY(idStudenteAttivitaFromativa),
-    FOREIGN KEY (idStudente) REFERENCES STUDENTE(idStudente),
-    FOREIGN KEY (idAttivitaFormativa) REFERENCES ATTIVITA_FORMATIVA(idAttivita)
+    CHECK (valutazione IN (valutazione >= 2 AND valutazione <=10)),
+    FOREIGN KEY (idStudente) REFERENCES STUDENTE (idStudente),
+    FOREIGN KEY (idAttivitaFormativa) REFERENCES ATTIVITA_FORMATIVA (idAttivita)
 );
+    
