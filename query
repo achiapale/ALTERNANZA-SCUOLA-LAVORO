@@ -1,0 +1,32 @@
+a)
+SELECT t.nome AS nome_tutor, t.cognome AS cognome_tutor, a.nome AS nome_azienda
+	FROM TUTOR AS t INNER JOIN AZIENDA AS a ON t.IdAzienda = a.IdAzienda
+
+b)
+SELECT c.specializzazione,, s.nome, s.cognome
+FROM STUDENTE AS s INNER JOIN CLASSE AS c ON s.IdClasse = c.IdClasse
+	INNER JOIN STUDENTE_ATTIVITAFORMATIVA AS sa ON sa.IdStudente = s.IdStudente
+	WHERE c.classe = 5
+ORDER BY c.specializzazione
+
+c)
+SELECT a.nome, COUNT(s.IdStudente) AS numero_studenti
+FROM AZIENDA AS a, STUDENTE AS s, ATTIVITA_FORMATIVA AS af, STUDENTE_ATTIVITAFORMATIVA AS sa
+WHERE a.idAzienda = af.idAzienda AND sa.idStudente = s.idStudente AND 
+sa.idAttivitaFormativa = af.idAttivita AND s.annoScolastico = '2013/2014'
+GROUP BY a.nome
+
+d)
+SELECT MAX(numero_studenti)
+	FROM (SELECT COUNT(s.idStudente) AS numero_studenti, c.classe
+			FROM STUDENTE AS s, CLASSE AS c
+			WHERE s.idClasse = c.idClasse
+			AND s.annoScolastico = '2012/2013'
+			GROUP BY c.classe)
+
+e)
+SELECT s.cognome, s.nome, sa.dataInizio, sa.durata, sa.vlautazione
+FROM STUDENTE AS s, STUDENTE_ATTIVITAFORMATIVA AS sa, ATTIVITA_FORMATIVA AS a 
+WHERE a.idAttivita = sa.idAttivitaFormativa AND s.idStudente = sa.idStudente
+GROUP BY (s.cognome, s.nome)
+
