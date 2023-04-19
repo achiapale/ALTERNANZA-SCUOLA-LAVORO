@@ -3,12 +3,23 @@ CREATE DATABASE IF NOT EXISTS ALTERNANZA;
 
 CLASSE
 CREATE TABLE CLASSE (
-    IdClasse INT NOT NULL AUTO_INCREMENT,
+    idClasse INT NOT NULL AUTO_INCREMENT,
     classe INT NOT NULL,
     sezione CHAR(1) NOT NULL,
     specializzazione CHAR(20) NOT NULL,
     PRIMARY KEY(IdClasse),
     CHECK(classe IN (classe >= 1 OR classe <= 5))
+);
+
+STUDENTE
+CREATE TABLE STUDENTE(
+    idStudente INT NOT NULL AUTO_INCREMENT,
+    nome CHAR(20) NOT NULL,
+    cognome CHAR(20) NOT NULL,
+    dataNascita DATE NOT NULL,
+    email CHAR(30) NOT NULL,
+    psw CHAR(30) NOT NULL,
+    PRIMARY KEY(idStudente)
 );
 
 AZIENDA
@@ -42,9 +53,9 @@ CREATE TABLE ATTIVITA_FORMATIVA (
     modalità CHAR(30) NOT NULL,
     descrizione CHAR(50) NOT NULL,
     argomento CHAR(30) NOT NULL,
-    idAzienda INT NOT NULL,
+    idTutor INT NOT NULL,
     PRIMARY KEY(idAttivita),
-    FOREIGN KEY(idAzienda) REFERENCES AZIENDA (idAzienda)
+    FOREIGN KEY(idTutor) REFERENCES TUTOR (idTutor)
     );
     
 DOCENTE
@@ -52,25 +63,20 @@ CREATE TABLE DOCENTE(
     idDocente INT NOT NULL AUTO_INCREMENT,
     nome CHAR(20) NOT NULL,
     cognome CHAR(20) NOT NULL,
-    PRIMARY KEY(idDocente)
+    idClasse INT NOT NULL,
+    PRIMARY KEY(idDocente),
+    FOREIGN KEY (idClasse) REFERENCES CLASSE (idClasse)
 );
 
-STUDENTE
-CREATE TABLE STUDENTE(
-    idStudente INT NOT NULL AUTO_INCREMENT,
-    nome CHAR(20) NOT NULL,
-    cognome CHAR(20) NOT NULL,
-    dataNascita DATE NOT NULL,
-    email CHAR(30) NOT NULL,
-    psw CHAR(30) NOT NULL,
-    idDocente INT NOT NULL,
-    idTutor INT NOT NULL,
-    idClasse INT NOT NULL,
-    annoScolastico CHAR(20) NOT NULL,
-    PRIMARY KEY(idStudente),
-    FOREIGN KEY(idDocente) REFERENCES DOCENTE(idDocente),
-	FOREIGN KEY(idTutor) REFERENCES TUTOR(idTutor),
-    FOREIGN KEY(idClasse) REFERENCES CLASSE(idClasse)
+CLASSE_STUDENTE
+CREATE TABLE CLASSE_STUDENTE (
+	idClasseStudente INT NOT NULL AUTO_INCREMENT,
+	idClasse INT NOT NULL,
+	idStudente INT NOT NULL,
+	annoScolastico CHAR(10) NOT NULL,
+	PRIMARY KEY (idClasseStudente),
+	FOREIGN KEY (idClasse) REFERENCES CLASSE (idClasse),
+	FOREIGN KEY (idStudente) REFERENCES STUDENTE (idStudente)
 );
 
 
